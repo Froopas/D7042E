@@ -34,6 +34,7 @@ public class ConsumerApplicationInitListener extends ApplicationInitListener {
 		
 		
 		//Initialize Arrowhead Context
+		System.out.println(CoreSystem.ORCHESTRATOR);
 		arrowheadService.updateCoreServiceURIs(CoreSystem.ORCHESTRATOR);
 
 		//TODO: implement here any custom behavior on application start up

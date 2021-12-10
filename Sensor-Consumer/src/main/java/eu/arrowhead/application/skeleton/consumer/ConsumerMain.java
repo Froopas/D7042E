@@ -91,7 +91,12 @@ public class ConsumerMain implements ApplicationRunner {
     		token = result.getAuthorizationTokens().get(interfaceName); //Can be null when the security type of the provider is 'CERTIFICATE' or nothing.
 		}
 		serviceUri += "/cmbox1/sensor1";
-		System.out.println(token);
+		System.out.println(address);
+		System.out.println(port);
+		System.out.println(serviceUri);
+
+		
+
     	final Object payload = "[{ \"bn\": \"CMBox1\", \"bt\": 2.1, \"bu\": \"V/g\", \"bver\": 1.0}, {\"n\": \"test\", \"u\": \"V/g\", \"v\": 1.9}]"; //Can be null if not specified in the description of the service.
     	
     	final String consumedService = arrowheadService.consumeServiceHTTP(String.class, httpMethod, address, port, serviceUri, interfaceName, token, payload);

@@ -1,0 +1,4 @@
+eu/arrowhead/application/skeleton/consumer/security/ConsumerSecurityConfig.class
+eu/arrowhead/application/skeleton/consumer/security/ConsumerAccessControlFilter.class
+eu/arrowhead/application/skeleton/consumer/ConsumerMain.class
+eu/arrowhead/application/skeleton/consumer/ConsumerApplicationInitListener.class
