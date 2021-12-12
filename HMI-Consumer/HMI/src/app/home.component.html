@@ -1,8 +1,17 @@
 <h1>Greeting</h1>
-<div [hidden]="!authenticated()">
+<div [hidden]="authenticated()">
 	<p>The ID is {{greeting.id}}</p>
 	<p>The content is {{greeting.content}}</p>
 </div>
-<div [hidden]="authenticated()">
+<div [hidden]="!authenticated()">
 	<p>Login to see your greeting</p>
+</div>
+<div *ngFor="let system of test" style="border:1px solid black;">
+	<p>{{system.name}}</p>
+	<div *ngFor="let service of system.services" style="margin-left:10px;border:1px solid black;">
+		<p>{{service.name}}</p>
+		<div >
+			{{service.data.n}} : {{service.data.v}} : {{service.data.u}}
+		</div>
+	</div>
 </div>

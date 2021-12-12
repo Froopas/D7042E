@@ -61,7 +61,7 @@ public class ConsumerMain implements ApplicationRunner {
     	orchestrationFormBuilder.requestedService(requestedService)
     							.flag(Flag.MATCHMAKING, false) //When this flag is false or not specified, then the orchestration response cloud contain more proper provider. Otherwise only one will be chosen if there is any proper.
     							.flag(Flag.OVERRIDE_STORE, true) //When this flag is false or not specified, then a Store Orchestration will be proceeded. Otherwise a Dynamic Orchestration will be proceeded.
-    							.flag(Flag.TRIGGER_INTER_CLOUD, false); //When this flag is false or not specified, then orchestration will not look for providers in the neighbor clouds, when there is no proper provider in the local cloud. Otherwise it will. 
+    							.flag(Flag.TRIGGER_INTER_CLOUD, true); //When this flag is false or not specified, then orchestration will not look for providers in the neighbor clouds, when there is no proper provider in the local cloud. Otherwise it will. 
     	
     	final OrchestrationFormRequestDTO orchestrationRequest = orchestrationFormBuilder.build();
     	
@@ -88,6 +88,7 @@ public class ConsumerMain implements ApplicationRunner {
     	final HttpMethod httpMethod = HttpMethod.GET;//Http method should be specified in the description of the service.
     	final String address = result.getProvider().getAddress();
     	final int port = result.getProvider().getPort();
+		System.out.println(port);
     	final String serviceUri = result.getServiceUri();
     	final String interfaceName = result.getInterfaces().get(0).getInterfaceName(); //Simplest way of choosing an interface.
     	String token = null;
@@ -97,6 +98,7 @@ public class ConsumerMain implements ApplicationRunner {
     	final Object payload = null; //Can be null if not specified in the description of the service.
     	
     	final String consumedService = arrowheadService.consumeServiceHTTP(String.class, httpMethod, address, port, serviceUri, interfaceName, token, payload, "testkey", "testvalue");
+		System.out.println(consumedService);
 	}
     
 	private void printOut(final Object object) {

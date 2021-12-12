@@ -23,6 +23,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20211205</version>
+		</dependency>
+
         <!--<dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
@@ -71,7 +78,7 @@
                   <arguments>run-script build</arguments>
               </configuration>
           </execution>
-		  <execution>
+		  <!--<execution>
               <id>npm-test</id>
               <goals>
                   <goal>npm</goal>
@@ -80,7 +87,7 @@
                   <arguments>run-script e2e</arguments>
               </configuration>
               <phase>test</phase>
-          </execution>
+          </execution>-->
 		</executions>
 		  </plugin>
   			<plugin>
