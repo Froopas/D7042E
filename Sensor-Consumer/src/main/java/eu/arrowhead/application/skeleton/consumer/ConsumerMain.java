@@ -1,5 +1,9 @@
 package eu.arrowhead.application.skeleton.consumer;
 
+import java.io.File;
+import java.util.Scanner;
+import java.util.Random;
+
 import java.util.logging.Level;
 
 import org.apache.logging.log4j.LogManager;
@@ -88,18 +92,52 @@ public class ConsumerMain implements ApplicationRunner {
     	final String interfaceName = result.getInterfaces().get(0).getInterfaceName(); //Simplest way of choosing an interface.
     	String token = null;
     	if (result.getAuthorizationTokens() != null) {
-    		token = result.getAuthorizationTokens().get(interfaceName); //Can be null when the security type of the provider is 'CERTIFICATE' or nothing.
+    	
+			token = result.getAuthorizationTokens().get(interfaceName); //Can be null when the security type of the provider is 'CERTIFICATE' or nothing.
 		}
 		serviceUri += "/cmbox1/sensor1";
 		System.out.println(address);
 		System.out.println(port);
 		System.out.println(serviceUri);
 
+		String datastr = "";
+		String currentPath = new java.io.File(".").getCanonicalPath();
+		System.out.println("Current dir:" + currentPath);
+		try{
+			File fh = new File("./DatasetTruncated.csv");
+			Scanner scan = new Scanner(fh);
+			while (scan.hasNextLine()) {
+				datastr += (scan.nextLine()) + "\n";
+				//System.out.println(datastr);
+			}
+			scan.close();
+			System.out.println("Done read");
+		} catch (Exception e) {
+			System.out.println("Error in file");
+		}
+
+		Random rand = new Random();
+
+		String[] entries = datastr.split("\n");
+		System.out.println(datastr);
+		int i = 0;
+		while(true) {
+			String entry = entries[i];
+			String[] fields = entry.split(",");
+			System.out.println(entry);
+
+			final Object payload = "[{ \"bn\": \"CMBox1\", \"bt\":"+ fields[0] + ", \"bu\": \"V/g\", \"bver\": 1.0, \"n\": \"senor1\", \"u\": \"V/g\", \"v\":"+ fields[3] +"}]"; //Can be null if not specified in the description of the service.
+    	
+			final String consumedService = arrowheadService.consumeServiceHTTP(String.class, httpMethod, address, port, serviceUri, interfaceName, token, payload);
+
+			System.out.println(i);
+
+			i = (i + 1) % entries.length;
+
+			Thread.sleep(1000);
+		}
 		
 
-    	final Object payload = "[{ \"bn\": \"CMBox1\", \"bt\": 2.1, \"bu\": \"V/g\", \"bver\": 1.0}, {\"n\": \"test\", \"u\": \"V/g\", \"v\": 1.9}]"; //Can be null if not specified in the description of the service.
-    	
-    	final String consumedService = arrowheadService.consumeServiceHTTP(String.class, httpMethod, address, port, serviceUri, interfaceName, token, payload);
 	}
 
 	private void printOut(final Object object) {
